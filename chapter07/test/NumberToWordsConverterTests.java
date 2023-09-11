@@ -1,29 +1,40 @@
 package chapter07.test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 import chapter07.NumbersToWordsConverter;
 
 public class NumberToWordsConverterTests {
-    @Test
-    public void testIsSingleDigitNumber() {
-        assertEquals(NumbersToWordsConverter.isSingleDigitNumber("0"), true);
-        assertEquals(NumbersToWordsConverter.isSingleDigitNumber("b"), false);
-        assertEquals(NumbersToWordsConverter.isSingleDigitNumber("00"), false);
+    @ParameterizedTest
+    @ValueSource(strings = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"})
+    public void testIsSingleDigitNumber(String word) {
+        assertTrue(NumbersToWordsConverter.isSingleDigitNumber(word));
     }
 
-    @Test
-    public void testNumberToWord() {
-        assertEquals(NumbersToWordsConverter.numberToWord("0"), "zero");
-        assertEquals(NumbersToWordsConverter.numberToWord("1"), "one");
-        assertEquals(NumbersToWordsConverter.numberToWord("2"), "two");
-        assertEquals(NumbersToWordsConverter.numberToWord("3"), "three");
-        assertEquals(NumbersToWordsConverter.numberToWord("4"), "four");
-        assertEquals(NumbersToWordsConverter.numberToWord("5"), "five");
-        assertEquals(NumbersToWordsConverter.numberToWord("6"), "six");
-        assertEquals(NumbersToWordsConverter.numberToWord("7"), "seven");
-        assertEquals(NumbersToWordsConverter.numberToWord("8"), "eight");
-        assertEquals(NumbersToWordsConverter.numberToWord("9"), "nine");
+    @ParameterizedTest
+    @ValueSource(strings = {"00", "11", "b", "bb"})
+    public void testIsNotSingleDigitNumber(String word) {
+        assertFalse(NumbersToWordsConverter.isSingleDigitNumber(word));
+    }
+
+    private static Stream<Arguments> provideNumbersToWordParameters() {
+        return Stream.of(Arguments.of("0", "zero"), Arguments.of("1", "one"),
+                Arguments.of("2", "two"), Arguments.of("3", "three"), Arguments.of("4", "four"),
+                Arguments.of("5", "five"), Arguments.of("6", "six"), Arguments.of("7", "seven"),
+                Arguments.of("8", "eight"), Arguments.of("9", "nine"));
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideNumbersToWordParameters")
+    public void testNumberToWord(String number, String word) {
+        assertEquals(NumbersToWordsConverter.numberToWord(number), word);
     }
 
     @Test

@@ -1,8 +1,12 @@
 package chapter07.test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import chapter07.StringList;
 
 public class StringListTests {
@@ -15,11 +19,16 @@ public class StringListTests {
         this.strList.addItem(12);
     }
 
-    @Test
-    public void testGetItem() {
-        assertEquals(this.strList.getItem(0), "a");
-        assertEquals(this.strList.getItem(1), "b");
-        assertEquals(this.strList.getItem(2), Integer.valueOf(12).toString());
+    private static Stream<Arguments> providePositionsAndItems() {
+        return Stream.of(Arguments.of(0, "a"), Arguments.of(1, "b"),
+                Arguments.of(2, Integer.valueOf(12).toString()));
+    }
+
+    @ParameterizedTest
+    @MethodSource("providePositionsAndItems")
+    public void testGetItem(int position, String item) {
+        assertEquals(this.strList.getItem(position), item);
+
     }
 
     @Test
@@ -39,11 +48,10 @@ public class StringListTests {
         assertEquals(this.strList.toString(), "[0] a,[1] b,");
     }
 
-    @Test
-    public void testGetPosition() {
-        assertEquals(this.strList.getPosition("a"), 0);
-        assertEquals(this.strList.getPosition("b"), 1);
-        assertEquals(this.strList.getPosition("12"), 2);
+    @ParameterizedTest
+    @MethodSource("providePositionsAndItems")
+    public void testGetPosition(int position, String item) {
+        assertEquals(this.strList.getPosition(item), position);
     }
 
     @Test
