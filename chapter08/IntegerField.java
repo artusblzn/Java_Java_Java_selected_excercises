@@ -12,25 +12,26 @@ import javax.swing.text.Document;
 public class IntegerField extends JTextField {
 
     public IntegerField() {
-        super();
+        // Zero is the default value
+        super("0");
     }
 
     public IntegerField(int columns) {
-        super(columns);
+        super("0", columns);
     }
 
     public IntegerField(String text) {
         // If the text is a number, pass the text to constructor
-        // Else, pass an empty string
-        super(IntegerField.isNumeric(text) ? text : "");
+        // Else, pass zero
+        super(IntegerField.isNumeric(text) ? text : "0");
     }
 
     public IntegerField(String text, int columns) {
-        super(IntegerField.isNumeric(text) ? text : "", columns);
+        super(IntegerField.isNumeric(text) ? text : "0", columns);
     }
 
     public IntegerField(Document doc, String text, int columns) {
-        super(doc, IntegerField.isNumeric(text) ? text : "", columns);
+        super(doc, IntegerField.isNumeric(text) ? text : "0", columns);
     }
 
     private static boolean isNumeric(String text) {
@@ -42,9 +43,11 @@ public class IntegerField extends JTextField {
         }
     }
 
-    public void setText(String text) {
+    public void setText(String text) throws IllegalArgumentException {
         if (IntegerField.isNumeric(text)) {
             super.setText(text);
+        } else {
+            throw new IllegalArgumentException("The text is not a number");
         }
     }
 

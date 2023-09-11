@@ -108,7 +108,11 @@ public class BigInteger {
     // The division method used is repeated subtraction
     // During every iteration it will subtract the divisor from the dividend
     // until the dividend is lesser or equal than the divisor - 1
-    public static String divide(String value1, String value2) {
+    public static String divide(String value1, String value2) throws ArithmeticException {
+        if (BigInteger.isZero(value2)) {
+            throw new ArithmeticException("Division by zero");
+        }
+
         String result = "0";
 
         // The other BigInteger method are used because we can have really large numbers here
@@ -118,5 +122,9 @@ public class BigInteger {
         }
 
         return result;
+    }
+
+    public static boolean isZero(String value) {
+        return BigInteger.trimBigInt(value).charAt(0) == '0';
     }
 }

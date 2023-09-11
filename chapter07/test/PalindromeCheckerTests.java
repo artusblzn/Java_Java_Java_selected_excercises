@@ -1,16 +1,22 @@
 package chapter07.test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import chapter07.PalindromeChecker;
 
 public class PalindromeCheckerTests {
 
-    @Test
-    public void isPalindrome() {
-        assertEquals(PalindromeChecker.isPalindrome("mom"), true);
-        assertEquals(PalindromeChecker.isPalindrome("radar"), true);
-        assertEquals(PalindromeChecker.isPalindrome("name"), false);
-        assertEquals(PalindromeChecker.isPalindrome("able was i ere i saw elba"), true);
+    @ParameterizedTest
+    @ValueSource(strings = {"mom", "radar", "able was i ere i saw elba"})
+    public void testIsPalindrome(String word) {
+        assertTrue(PalindromeChecker.isPalindrome(word));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"mon", "adar", "name"})
+    public void testIsNotPalindrome(String word) {
+        assertFalse(PalindromeChecker.isPalindrome(word));
     }
 }

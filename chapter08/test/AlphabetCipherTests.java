@@ -1,27 +1,33 @@
 package chapter08.test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import org.junit.Test;
+import java.util.stream.Stream;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import chapter08.AlphabetCipher;
 import chapter08.Alphabet;
 
 public class AlphabetCipherTests {
     private AlphabetCipher alphabetCipher;
 
-    @Test
-    public void testEncode() {
-        alphabetCipher = new AlphabetCipher(new Alphabet("zebra"));
-        assertEquals(alphabetCipher.encode("word"), "vmpr");
-        assertEquals(alphabetCipher.encode("word."), "vmpr.");
-        assertEquals(alphabetCipher.encode("Word."), "vmpr.");
+    private static Stream<Arguments> provideKeywordMsgAndCipheredMsg() {
+        return Stream.of(Arguments.of("zebra", "word", "vmpr"),
+                Arguments.of("zebra", "word.", "vmpr."), Arguments.of("zebra", "Word.", "vmpr."));
     }
 
-    @Test
-    public void testDecode() {
-        alphabetCipher = new AlphabetCipher(new Alphabet("zebra"));
-        assertEquals(alphabetCipher.decode("vmpr"), "word");
-        assertEquals(alphabetCipher.decode("vmpr."), "word.");
-        assertEquals(alphabetCipher.decode("Vmpr."), "word.");
+    @ParameterizedTest
+    @MethodSource("provideKeywordMsgAndCipheredMsg")
+    public void testEncode(String keyword, String message, String ciphedMsg) {
+        alphabetCipher = new AlphabetCipher(new Alphabet(keyword));
+        assertEquals(alphabetCipher.encode(message), ciphedMsg);
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideKeywordMsgAndCipheredMsg")
+    public void testDecode(String keyword, String message, String ciphedMsg) {
+        alphabetCipher = new AlphabetCipher(new Alphabet(keyword));
+        assertEquals(alphabetCipher.decode(ciphedMsg), message.toLowerCase());
     }
 
 }

@@ -10,6 +10,10 @@ public class AnagramTests {
     @Test
     public void testAreAnagrams() {
         assertTrue(Anagram.areAnagrams("cat", "act"));
+    }
+
+    @Test
+    public void testAreNotAnagrams() {
         assertFalse(Anagram.areAnagrams("cat", "acct"));
     }
 }
