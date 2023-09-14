@@ -16,19 +16,12 @@ public class MagicSquareTests {
 
     }
 
-    private static int[][][] provideNotMagicSquares() {
-        return new int[][][] {{{6, 7, 2}, {1, 5, 9}, {8, 3, 6}},
-                {{6, 7, 2}, {1, 5, 10}, {8, 3, 4}}};
-    }
-
-    // Don't know why this test doesn't run.
-    // Maybe JUnit does not work well with matrices
-    @ParameterizedTest
-    @MethodSource("provideNotMagicSquares")
-    public void testIsNotMagicSquare(int[][] notAMagicSquare) {
-        System.out.println(MagicSquare.isMagicSquare(notAMagicSquare));
-        assertFalse(MagicSquare.isMagicSquare(notAMagicSquare));
-
+    @Test
+    public void testIsNotMagicSquare() {
+        int[][] square1 = {{6, 7, 2}, {1, 5, 9}, {10, 3, 4}};
+        int[][] square2 = {{6, 7, 2}, {1, 5, 9}, {8, 3, 6}};
+        assertFalse(MagicSquare.isMagicSquare(square1));
+        assertFalse(MagicSquare.isMagicSquare(square2));
     }
 
 
