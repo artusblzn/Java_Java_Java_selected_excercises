@@ -33,7 +33,7 @@ public class CaesarCipher {
         CharacterIterator it = new StringCharacterIterator(message);
         String ciphedMessage = "";
 
-        while (it.current() != it.DONE) {
+        while (it.current() != CharacterIterator.DONE) {
             int asciiValue = (int) it.current();
             asciiValue += this.shift;
             // Verify if the shift made it goes from letters to symbols
@@ -51,7 +51,7 @@ public class CaesarCipher {
         CharacterIterator it = new StringCharacterIterator(ciphedMessage);
         String originalMessage = "";
 
-        while (it.current() != it.DONE) {
+        while (it.current() != CharacterIterator.DONE) {
             int asciiValue = (int) it.current();
             asciiValue -= this.shift;
             // Verify if the shift made it goes to capital letters
