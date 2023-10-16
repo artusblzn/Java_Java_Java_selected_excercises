@@ -1,11 +1,15 @@
 package chapter02.test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.util.Arrays;
-import org.junit.jupiter.api.BeforeEach;
+
 import org.junit.jupiter.api.Test;
 
 import chapter02.Student;
+
+import org.junit.jupiter.api.BeforeEach;
+
 
 
 public class StudentTests {
